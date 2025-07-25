@@ -1,0 +1,28 @@
+name: unit-test
+on:
+   push:
+    branches:
+      - master
+jobs:
+  commons-validator-test:
+    runs-on: ubuntu-latest
+    strategy:
+        matrix:
+          java-version: ["17","21","24"]  
+    steps:
+       - id: project-checkout
+         uses: actions/checkout@v4
+       - id: jdk-setup
+         uses: actions/java-setup@v4
+         with:
+            java-version: ${{ matrix.java-version }}
+            distribution: "liberica"
+            cache: "maven"  
+       - id: copy-project-resources
+         run: |
+             cp -r commons-validator/src src
+             cp commons-validator/pom.xml .
+       - id: unit-test
+         run: mvn clean test -Djava.version=${{ matrix.java-version }}           
+      
+
