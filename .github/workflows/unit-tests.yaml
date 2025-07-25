@@ -2,7 +2,7 @@ name: unit-test
 on:
    push:
     branches:
-      - master
+      - main
 jobs:
   commons-validator-test:
     runs-on: ubuntu-latest
